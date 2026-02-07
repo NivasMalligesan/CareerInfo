@@ -32,7 +32,7 @@ export default function Login() {
 
             const decoded = JSON.parse(atob(token.split(".")[1]));
             const role = decoded.role;
-            navigate(role === "ROLE_ADMIN" ? "/admin" : "/user");
+            navigate(role === "ADMIN" ? "/admin" : "/user");
         } catch (error) {
             console.error("Login failed:", error);
             setError(error.response?.data?.message || error.message || "Login failed. Please try again.");

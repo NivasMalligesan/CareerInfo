@@ -18,7 +18,7 @@ const ManageSkills = () => {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
-  const categories = ['Backend','Programming', 'Design', 'Marketing', 'Business', 'Data Science', 'Other'];
+  const categories = ['Backend', 'Programming', 'Design', 'Marketing', 'Business', 'Data Science', 'Other'];
 
   useEffect(() => {
     fetchSkills();
@@ -57,19 +57,33 @@ const ManageSkills = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     try {
       if (isEditMode) {
-       
-        await api.put(`/api/skill/${formData.id}`, formData);
-        setSkills(skills.map(skill =>
-          skill.id === formData.id ? { ...formData } : skill
-        ));
+        const response = await api.put(
+          `/api/skill/`,
+          {
+            skillName: formData.skillName,
+            category: formData.category,
+            description: formData.description
+          }
+        );
+
+        setSkills(
+          skills.map(skill =>
+            skill.id === formData.id ? response.data : skill
+          )
+        );
+
         setSuccessMessage('Skill updated successfully!');
       } else {
-        const response = await api.post('/api/skill', formData);
+        const response = await api.post('/api/skill/', {
+          skillName: formData.skillName,
+          category: formData.category,
+          description: formData.description
+        });
+
         setSkills([...skills, response.data]);
         setSuccessMessage('Skill created successfully!');
       }
@@ -78,9 +92,12 @@ const ManageSkills = () => {
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
       console.error('Failed to save skill:', error);
-      setErrors({ submit: error.response?.data?.message || 'Failed to save skill' });
+      setErrors({
+        submit: error.response?.data?.message || 'Failed to save skill'
+      });
     }
   };
+
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this skill?')) return;

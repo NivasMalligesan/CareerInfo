@@ -2,6 +2,7 @@ package com.CodeSpace.careerinfo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,8 +29,26 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configure(http))  // ✅ Enable CORS in Security
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
+
+                        // ✅ Allow OPTIONS requests (for CORS preflight)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // ✅ Allow auth endpoints without authentication
                         .requestMatchers("/auth/**").permitAll()
+
+                        // ✅ Allow public access to skills and careers (for display)
+                        .requestMatchers(HttpMethod.GET, "/api/skill/**", "/api/career/**").permitAll()
+
+                        // ✅ Admin endpoints - ADMIN only
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // ✅ User and recommendations - USER and ADMIN can access
+                        .requestMatchers("/api/user/**", "/api/recommendations/**", "/api/analysis/**")
+                        .hasAnyRole("USER", "ADMIN")
+
+                        // ✅ All other requests require authentication
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(

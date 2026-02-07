@@ -23,12 +23,14 @@ export default function Register() {
         setError("");
         
         try {
-            const res = await api.post("/auth/register", { name, email, password });
+            // ✅ FIXED: Send only name, email, password (no role field)
+            const res = await api.post("/auth/register", { 
+                name, 
+                email, 
+                password
+                // role is now set automatically in the backend
+            });
             
-            // Debug: Check what the API returns
-            console.log("API Response:", res.data);
-            
-            // Handle different possible response structures
             const token = res.data.token || res.data.accessToken || res.data;
             
             if (!token || typeof token !== 'string') {
@@ -37,9 +39,10 @@ export default function Register() {
             
             login(token);
             
-            // Decode and navigate
             const decoded = JSON.parse(atob(token.split(".")[1]));
             const role = decoded.role;
+            
+            // ✅ FIXED: Check for "ADMIN" not "ROLE_ADMIN"
             navigate(role === "ADMIN" ? "/admin" : "/user");
         } catch (error) {
             console.error("Registration failed:", error);
@@ -199,7 +202,6 @@ export default function Register() {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
