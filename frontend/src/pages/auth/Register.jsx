@@ -40,7 +40,7 @@ export default function Register() {
             login(token);
             
             const decoded = JSON.parse(atob(token.split(".")[1]));
-            const role = "ADMIN";
+            const role = decoded.role;
             
             // ✅ FIXED: Check for "ADMIN" not "ROLE_ADMIN"
             navigate(role === "ADMIN" ? "/admin" : "/user");
