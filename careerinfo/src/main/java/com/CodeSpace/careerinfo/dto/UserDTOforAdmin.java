@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class RegisterDTO {
+public class UserDTOforAdmin {
+    private Long id;
 
     @NotBlank
     private String name;
@@ -15,8 +16,5 @@ public class RegisterDTO {
     private String email;
 
     @NotBlank
-    private String password;
-
-    // ✅ REMOVED: role field - no longer needed
-    // Role is now set automatically to "USER" in the service layer
+    private String role;
 }

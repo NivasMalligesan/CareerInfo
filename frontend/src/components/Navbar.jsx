@@ -58,7 +58,7 @@ const Navbar = () => {
     )},
   ];
 
-  const navItems = auth?.role === 'ROLE_ADMIN' ? adminNavItems : userNavItems;
+  const navItems = auth?.role === 'ADMIN' ? adminNavItems : userNavItems;
 
   if (!auth) return null; // Don't show navbar if not authenticated
 

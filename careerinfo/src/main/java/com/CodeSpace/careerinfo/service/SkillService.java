@@ -2,10 +2,13 @@ package com.CodeSpace.careerinfo.service;
 
 import com.CodeSpace.careerinfo.dto.SkillDTO;
 import com.CodeSpace.careerinfo.model.Skill;
+import com.CodeSpace.careerinfo.repository.CareerSkillRepository;
 import com.CodeSpace.careerinfo.repository.SkillRepository;
+import com.CodeSpace.careerinfo.repository.UserSkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SkillService {
     private final SkillRepository skillRepository;
+    private final UserSkillRepository userSkillRepository;
+    private final CareerSkillRepository careerSkillRepository;
 
     public SkillDTO addNewSkills(SkillDTO skillDTO){
 
@@ -60,10 +65,14 @@ public class SkillService {
         return mapToSkillDTO(updatedSkill);
     }
 
+    @Transactional
     public void deleteSkill(Long skillId){
         if (!skillRepository.existsById(skillId)) {
             throw new RuntimeException("Skill not found");
         }
+
+        userSkillRepository.deleteBySkillId(skillId);
+        careerSkillRepository.deleteBySkillId(skillId);
         skillRepository.deleteById(skillId);
     }
 

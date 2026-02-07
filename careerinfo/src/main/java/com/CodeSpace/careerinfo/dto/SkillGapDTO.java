@@ -3,8 +3,10 @@ package com.CodeSpace.careerinfo.dto;
 import lombok.Data;
 
 @Data
-public class CareerSkillDTO {
+public class SkillGapDTO {
     private Long skillId;
     private String skillName;
-    private String requiredLevel; // BEGINNER, INTERMEDIATE, ADVANCED, EXPERT
+    private String requiredLevel;
+    private String userLevel;
+    private boolean matched;
 }

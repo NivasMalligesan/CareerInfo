@@ -1,11 +1,13 @@
 package com.CodeSpace.careerinfo.repository;
 
-import com.CodeSpace.careerinfo.model.Skill;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
-public interface SkillRepository extends JpaRepository<Skill,Long> {
-    Optional<Skill> findBySkillName(String skillName);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import com.CodeSpace.careerinfo.model.Skill;
+
+@Repository
+public interface SkillRepository extends JpaRepository<Skill, Long> {
+    Optional<Skill> findBySkillName(String skillName);
 }

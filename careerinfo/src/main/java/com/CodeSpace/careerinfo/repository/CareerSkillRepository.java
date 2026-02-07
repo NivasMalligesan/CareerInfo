@@ -1,7 +1,15 @@
 package com.CodeSpace.careerinfo.repository;
 
-import com.CodeSpace.careerinfo.model.CareerSkills;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-public interface CareerSkillRepository extends JpaRepository<CareerSkills,Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.CodeSpace.careerinfo.model.CareerSkills;
+
+@Repository
+public interface CareerSkillRepository extends JpaRepository<CareerSkills, Long> {
+    List<CareerSkills> findByCareerId(Long careerId);
+    void deleteByCareerId(Long careerId);
+    void deleteBySkillId(Long SkillId);
 }
