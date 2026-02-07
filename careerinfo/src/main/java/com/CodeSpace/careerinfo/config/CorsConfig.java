@@ -1,59 +1,43 @@
 package com.CodeSpace.careerinfo.config;
 
-<<<<<<< HEAD
-import java.util.Arrays;
-=======
->>>>>>> b01a9eb6e37ec492f51695419dc7f7563fb7cbcd
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-<<<<<<< HEAD
-=======
 import java.util.List;
 
->>>>>>> b01a9eb6e37ec492f51695419dc7f7563fb7cbcd
 @Configuration
 public class CorsConfig {
 
-    @Bean
-    public CorsFilter corsFilter() {
-<<<<<<< HEAD
-        CorsConfiguration config = new CorsConfiguration();
+        @Bean
+        public CorsFilter corsFilter() {
+                CorsConfiguration config = new CorsConfiguration();
 
-        // Remove trailing slash!
-        config.setAllowedOrigins(Arrays.asList(
-                "https://careerinfoweb.onrender.com",
-                "http://localhost:5173"  // For local development
-        ));
+                // Allow both local development and production frontend
+                config.setAllowedOrigins(List.of(
+                        "http://localhost:5173",
+                        "https://careerinfoweb.onrender.com"
+                ));
 
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(true);
-        config.setMaxAge(3600L); // Cache preflight response for 1 hour
+                // Include PATCH method for role updates
+                config.setAllowedMethods(List.of(
+                        "GET",
+                        "POST",
+                        "PATCH",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                ));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-=======
+                config.setAllowedHeaders(List.of("*"));
+                config.setAllowCredentials(true);
+                config.setMaxAge(3600L); // Cache preflight response for 1 hour
 
-        CorsConfiguration config = new CorsConfiguration();
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", config);
 
-        config.setAllowedOrigins(List.of("http://localhost:5173","https://careerinfoweb.onrender.com"));
-        config.setAllowedMethods(List.of("GET", "POST","PATCH", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-
->>>>>>> b01a9eb6e37ec492f51695419dc7f7563fb7cbcd
-        source.registerCorsConfiguration("/**", config);
-
-        return new CorsFilter(source);
-    }
-<<<<<<< HEAD
+                return new CorsFilter(source);
+        }
 }
-=======
-}
->>>>>>> b01a9eb6e37ec492f51695419dc7f7563fb7cbcd
