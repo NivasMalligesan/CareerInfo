@@ -18,7 +18,22 @@ const ManageSkills = () => {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
-  const categories = ['Backend', 'Programming', 'Design', 'Marketing', 'Business', 'Data Science', 'Other'];
+const categories = [
+  'Backend',
+  'Backend Architecture',
+  'Business',
+  'CS Fundamentals',
+  'Data Science',
+  'Database',
+  'Design',
+  'DevOps',
+  'Frontend',
+  'Frontend Framework',
+  'Marketing',
+  'Other',
+  'Programming',
+  'Version Control'
+];
 
   useEffect(() => {
     fetchSkills();
