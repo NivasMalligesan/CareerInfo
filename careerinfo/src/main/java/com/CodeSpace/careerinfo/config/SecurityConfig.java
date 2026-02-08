@@ -27,9 +27,8 @@ public class SecurityConfig {
     ) throws Exception {
 
         http
-                .cors(cors -> cors.configure(http))  // ✅ Enable CORS in Security
+                .cors(cors -> cors.configure(http))
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
 
                         // ✅ Allow OPTIONS requests (for CORS preflight)
@@ -38,8 +37,13 @@ public class SecurityConfig {
                         // ✅ Allow auth endpoints without authentication
                         .requestMatchers("/auth/**").permitAll()
 
-                        // ✅ Allow public access to skills and careers (for display)
+                        // ✅ Allow public GET access to skills and careers
                         .requestMatchers(HttpMethod.GET, "/api/skill/**", "/api/career/**").permitAll()
+
+                        // ✅ ADMIN can manage careers and skills (POST, PUT, DELETE)
+                        .requestMatchers(HttpMethod.POST, "/api/career/**", "/api/skill/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/career/**", "/api/skill/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/career/**", "/api/skill/**").hasRole("ADMIN")
 
                         // ✅ Admin endpoints - ADMIN only
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

@@ -18,9 +18,6 @@ export default function Login() {
         try {
             const res = await api.post("/auth/login", { email, password });
             
-            // Debug: Check what the API returns
-            console.log("API Response:", res.data);
-            
             // Handle different possible response structures
             const token = res.data.token || res.data.accessToken || res.data;
             
