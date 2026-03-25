@@ -698,8 +698,8 @@ This project is for educational purposes as part of a Web Development course ass
 ## 👤 Author
 
 **Your Name**
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
+- GitHub: [NivasMalligesan](https://github.com/NivasMalligesan/)
+- Email: nivasmalligesan23@gmail.com
 
 ---
 
